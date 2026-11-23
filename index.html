@@ -12,11 +12,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
 </head>
 <body>
+  <div class="progress" aria-hidden="true"></div>
   <header class="nav" id="nav">
     <a href="#top" class="brand" aria-label="Home">PSR</a>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
     <nav id="menu">
       <a href="#about">Summary</a>
       <a href="#expertise">Skills</a>
@@ -25,6 +33,13 @@
       <a href="#education">Education</a>
       <a href="Paramjit-Singh-Resume.pdf" class="nav-cta" download>Résumé ↓</a>
     </nav>
+    <div class="nav-tools">
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+    </div>
   </header>
 
   <main id="top">
@@ -113,102 +128,130 @@
       </div>
     </section>
 
+    <div class="work">
+    <div class="filter-bar" role="group" aria-label="Filter experience and projects by skill">
+      <div class="filter-inner">
+        <span class="filter-label">Filter by skill</span>
+        <div class="chips">
+          <button class="chip" type="button" data-tag="all" aria-pressed="true">All</button>
+          <button class="chip" type="button" data-tag="rn" aria-pressed="false">React Native</button>
+          <button class="chip" type="button" data-tag="ts" aria-pressed="false">TypeScript</button>
+          <button class="chip" type="button" data-tag="android" aria-pressed="false">Native Android</button>
+          <button class="chip" type="button" data-tag="firebase" aria-pressed="false">Firebase</button>
+          <button class="chip" type="button" data-tag="api" aria-pressed="false">REST APIs</button>
+          <button class="chip" type="button" data-tag="cicd" aria-pressed="false">CI/CD &amp; release</button>
+          <button class="chip" type="button" data-tag="lead" aria-pressed="false">Leadership</button>
+          <button class="chip" type="button" data-tag="a11y" aria-pressed="false">Accessibility</button>
+        </div>
+        <p class="filter-status" aria-live="polite"></p>
+      </div>
+    </div>
+
     <section id="experience" class="section">
       <div class="section-head reveal">
         <span class="num">03</span>
         <h2>Employment history</h2>
+        <button class="text-btn" type="button" id="expand-all">Expand all</button>
       </div>
       <ol class="timeline">
-        <li class="job reveal">
-          <div class="when">Apr 2025 — Present</div>
+        <li class="job reveal" data-tags="rn ts lead cicd api firebase">
+          <div class="when"><span class="node" aria-hidden="true"></span>Apr 2025 — Present</div>
           <div class="what">
-            <h3>Associate Tech Lead</h3>
-            <p class="org">Appinventiv Technologies</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-1"><span class="job-title">Associate Tech Lead</span><span class="org">Appinventiv Technologies</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-1"><div>
+              <ul>
               <li><b>Technical leadership &amp; architecture ownership</b> — lead the design and development of mobile apps with React Native and native platforms, ensuring architectural standards, performance benchmarks and best practices. Review code, guide implementation decisions and deliver production-ready apps.</li>
               <li><b>Cross-functional collaboration &amp; delivery ownership</b> — work with product, design, backend and QA to turn business requirements into technical solutions. Own feature delivery end-to-end, coordinate dependencies and ship on time across iOS and Android.</li>
               <li><b>Mentorship &amp; engineering excellence</b> — mentor developers through code reviews, technical guidance and problem-solving. Improve workflows, CI/CD and testing practices for reliability, maintainability and team productivity.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Sep 2024 — Mar 2025</div>
+        <li class="job reveal" data-tags="rn api a11y">
+          <div class="when"><span class="node" aria-hidden="true"></span>Sep 2024 — Mar 2025</div>
           <div class="what">
-            <h3>Senior Software Engineer</h3>
-            <p class="org">Tech Mahindra</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-2"><span class="job-title">Senior Software Engineer</span><span class="org">Tech Mahindra</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-2"><div>
+              <ul>
               <li><b>API integration &amp; experience enhancement</b> — integrated RESTful APIs and third-party libraries in React Native apps; worked with designers to turn UI/UX strategy into high-performance apps, iterating on user feedback.</li>
               <li><b>Accessibility</b> — implemented image alt text and keyboard navigation for inclusivity; advised management on the pros and cons of specific mobile platforms.</li>
               <li><b>Team collaboration</b> — defined, designed and shipped new features with cross-functional teams.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Nov 2023 — Sep 2024</div>
+        <li class="job reveal" data-tags="rn firebase api cicd">
+          <div class="when"><span class="node" aria-hidden="true"></span>Nov 2023 — Sep 2024</div>
           <div class="what">
-            <h3>Senior Software Engineer</h3>
-            <p class="org">Antier Solutions</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-3"><span class="job-title">Senior Software Engineer</span><span class="org">Antier Solutions</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-3"><div>
+              <ul>
               <li><b>UI/UX enhancement &amp; user feedback</b> — designed and shipped features with a focus on quality, performance and responsiveness; implemented designs consistently across platforms.</li>
               <li><b>Troubleshooting</b> — debugged issues to improve performance and usability; evaluated and adopted new technologies to improve development efficiency.</li>
               <li><b>Collaborative engagement</b> — shipped features to the App Store and Google Play with cross-functional teams.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Sep 2023 — Nov 2023</div>
+        <li class="job reveal" data-tags="lead cicd a11y">
+          <div class="when"><span class="node" aria-hidden="true"></span>Sep 2023 — Nov 2023</div>
           <div class="what">
-            <h3>Team Lead &amp; Senior Software Engineer</h3>
-            <p class="org">Freelance</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-4"><span class="job-title">Team Lead &amp; Senior Software Engineer</span><span class="org">Freelance</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-4"><div>
+              <ul>
               <li><b>Requirements, development &amp; debugging</b> — built a product with the team, coordinating CI/CD updates with backend and DevOps.</li>
               <li><b>Accessibility</b> — implemented image alt text and keyboard navigation; advised on the trade-offs of mobile platforms.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Oct 2021 — Sep 2023</div>
+        <li class="job reveal" data-tags="rn android firebase api cicd">
+          <div class="when"><span class="node" aria-hidden="true"></span>Oct 2021 — Sep 2023</div>
           <div class="what">
-            <h3>Senior Software Engineer</h3>
-            <p class="org">Netsmartz LLC</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-5"><span class="job-title">Senior Software Engineer</span><span class="org">Netsmartz LLC</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-5"><div>
+              <ul>
               <li><b>Mobile development</b> — developed features in Java, Kotlin and React Native for multiple apps; established architectural and product design details for diverse requirements.</li>
               <li><b>Error handling</b> — clear error messages and guidance to help users recover from mistakes.</li>
               <li><b>Navigation &amp; responsive design</b> — simplified menu structures and navigation paths; optimised for many screen sizes and devices.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Jan 2017 — Oct 2021</div>
+        <li class="job reveal" data-tags="android rn api">
+          <div class="when"><span class="node" aria-hidden="true"></span>Jan 2017 — Oct 2021</div>
           <div class="what">
-            <h3>Senior Android Developer</h3>
-            <p class="org">Evergreen Publications</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-6"><span class="job-title">Senior Android Developer</span><span class="org">Evergreen Publications</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-6"><div>
+              <ul>
               <li><b>Team collaboration</b> — worked with core technology and platform teams to balance cross-platform consistency with Android optimisation; wrote clean, self-documenting code.</li>
               <li><b>Specification &amp; delivery</b> — distributed apps to CBSE and ICSE schools via tablets; reviewed design specs and engineering docs.</li>
               <li><b>React Native</b> — began building React Native skills in 2020 through training and hands-on development.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Dec 2016 — Jan 2017</div>
+        <li class="job reveal" data-tags="android">
+          <div class="when"><span class="node" aria-hidden="true"></span>Dec 2016 — Jan 2017</div>
           <div class="what">
-            <h3>Android Developer</h3>
-            <p class="org">Technology One</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-7"><span class="job-title">Android Developer</span><span class="org">Technology One</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-7"><div>
+              <ul>
               <li>Improved system performance through regular maintenance and upgrades of software components.</li>
               <li>Wrote concise app documentation for stakeholders.</li>
             </ul>
+            </div></div>
           </div>
         </li>
-        <li class="job reveal">
-          <div class="when">Aug 2015 — Dec 2016</div>
+        <li class="job reveal" data-tags="android">
+          <div class="when"><span class="node" aria-hidden="true"></span>Aug 2015 — Dec 2016</div>
           <div class="what">
-            <h3>Android Developer</h3>
-            <p class="org">Cyber Height Technologies</p>
-            <ul>
+            <h3><button class="job-head" type="button" aria-expanded="true" aria-controls="job-8"><span class="job-title">Android Developer</span><span class="org">Cyber Height Technologies</span><span class="chev" aria-hidden="true"></span></button></h3>
+            <div class="job-body" id="job-8"><div>
+              <ul>
               <li>Built native Android features in Java across multiple apps, gaining hands-on experience across many devices and Android versions.</li>
             </ul>
+            </div></div>
           </div>
         </li>
       </ol>
@@ -220,65 +263,73 @@
         <h2>Projects</h2>
       </div>
       <div class="projects">
-        <article class="project reveal">
+        <article class="project reveal" data-tags="rn ts firebase api lead cicd" data-color="#c2577e" data-initials="BP">
           <p class="role">Lead · Development &amp; maintenance</p>
           <h3>Bloom Partners</h3>
           <p>Led development and technical direction across iOS and Android — scalable architecture, state management, API integration, performance monitoring, production troubleshooting and releases.</p>
           <p class="stack">React Native · TypeScript · Zustand · MMKV · Firebase · Axios · React Navigation · EAS · Dynatrace</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://apps.apple.com/us/app/bloom-partners/id6748376789" target="_blank" rel="noopener">App Store ↗</a>
             <a href="https://play.google.com/store/apps/details?id=com.bloomholding.connect&amp;hl=en_IN" target="_blank" rel="noopener">Google Play ↗</a>
           </div>
         </article>
-        <article class="project reveal">
+        <article class="project reveal" data-tags="rn ts api" data-color="#1f7a74" data-initials="K">
           <p class="role">Development · POCs &amp; integrations</p>
           <h3>Kerzner</h3>
           <p>Built technical POCs and integrations, including the FreedomPay payment gateway and DocuSign — evaluating approaches and solving integration challenges on iOS and Android.</p>
           <p class="stack">React Native · TypeScript · REST APIs · FreedomPay · DocuSign</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://www.kerzner.com/" target="_blank" rel="noopener">Website ↗</a>
           </div>
         </article>
-        <article class="project reveal">
+        <article class="project reveal" data-tags="rn firebase api" data-color="#3f63e0" data-initials="EB">
           <p class="role">Development &amp; maintenance</p>
           <h3>EduBlock Pro</h3>
           <p>Firebase push notifications with React Native, plus permissions, connectivity handling and REST API integration.</p>
           <p class="stack">React Native · Firebase · RN Elements · RN Config · RN Permissions · NetInfo · Axios</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://apps.apple.com/in/app/edublock-pro/id6468953233" target="_blank" rel="noopener">App Store ↗</a>
             <a href="https://play.google.com/store/apps/details?id=com.qpl" target="_blank" rel="noopener">Google Play ↗</a>
           </div>
         </article>
-        <article class="project reveal">
+        <article class="project reveal" data-tags="rn firebase api" data-color="#6c4cf0" data-initials="BD">
           <p class="role">Development, updates &amp; maintenance</p>
           <h3>BlockDAG X1 App Miner</h3>
           <p>Firebase push notifications, phone-number input and REST APIs, with caching of all app data for a faster experience.</p>
           <p class="stack">React Native · Firebase · Phone Number Input · NetInfo · Axios</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://blockdag.network/product/blockdagx1" target="_blank" rel="noopener">Website ↗</a>
           </div>
         </article>
-        <article class="project reveal">
+        <article class="project reveal" data-tags="rn firebase api cicd" data-color="#1e9a8a" data-initials="CS">
           <p class="role">Development &amp; maintenance</p>
           <h3>CareSmartz360 Agency App</h3>
           <p>Home-care agency app with push notifications, maps, over-the-air updates and REST APIs.</p>
           <p class="stack">React Native · Firebase · Maps · CodePush · NetInfo · Axios · Fetch</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://apps.apple.com/us/app/caresmartz360-agency-app/id1553250628" target="_blank" rel="noopener">App Store ↗</a>
             <a href="https://play.google.com/store/apps/details?id=com.caresmartzagency&amp;hl=en" target="_blank" rel="noopener">Google Play ↗</a>
           </div>
         </article>
-        <article class="project reveal">
+        <article class="project reveal" data-tags="android api" data-color="#3b8a3e" data-initials="EL">
           <p class="role">Development &amp; maintenance</p>
           <h3>Evergreen e-Learning</h3>
           <p>Native Android learning apps built on MVC and MVVM, delivered to schools.</p>
           <p class="stack">Android · Java · MVVM · Retrofit · Picasso · Glide</p>
           <div class="links">
+            <button class="preview" type="button">Preview app</button>
             <a href="https://play.google.com/store/search?q=evergreen+e+learning+app&amp;c=apps&amp;hl=en" target="_blank" rel="noopener">Google Play ↗</a>
           </div>
         </article>
       </div>
     </section>
+
+    </div>
 
     <section id="education" class="section">
       <div class="section-head reveal">
@@ -308,6 +359,37 @@
       </div>
     </section>
   </main>
+
+  <dialog class="app-dialog" id="app-dialog" aria-labelledby="dlg-title">
+    <button class="dlg-close" type="button" aria-label="Close preview">&times;</button>
+    <div class="dlg-grid">
+      <div class="phone-stage">
+        <div class="phone" aria-hidden="true">
+          <div class="screen">
+            <div class="status"><span>9:41</span><span class="notch"></span><span class="bat"></span></div>
+            <div class="app-head">
+              <div class="app-icon"></div>
+              <div><div class="app-name"></div><div class="app-plat"></div></div>
+            </div>
+            <p class="app-label">Built with</p>
+            <ul class="app-list"></ul>
+            <div class="tabbar"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="dlg-info">
+        <p class="role" id="dlg-role"></p>
+        <h3 id="dlg-title"></h3>
+        <p class="dlg-desc" id="dlg-desc"></p>
+        <div class="links" id="dlg-links"></div>
+        <div class="dlg-nav">
+          <button type="button" class="text-btn" id="dlg-prev">&larr; Previous</button>
+          <span id="dlg-count"></span>
+          <button type="button" class="text-btn" id="dlg-next">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
   <footer class="footer">
     <span>© <span id="year">2026</span> Paramjit Singh Rana</span>
